@@ -1,0 +1,10 @@
+privilegeTargets:
+  'Neos\Neos\Security\Authorization\Privilege\ModulePrivilege':
+    'Wwwision.HtmxTest:Module':
+      matcher: 'administration/htmxtest'
+
+roles:
+  'Neos.Neos:Administrator':
+    privileges:
+      - privilegeTarget: 'Wwwision.HtmxTest:Module'
+        permission: GRANT

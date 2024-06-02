@@ -1,0 +1,20 @@
+Neos:
+  Neos:
+    modules:
+      'administration':
+        submodules:
+          'htmxtest':
+            label: 'HTMX Test'
+            description: 'Simple module listing nodes, sprinkled with some HTMX dynamic sugar'
+            controller: 'Wwwision\HtmxTest\Controller\HtmxController'
+            icon: 'html5'
+            additionalResources:
+              styleSheets:
+                - 'resource://Wwwision.Neos.ModuleComponents/Public/Styles/module.css'
+                - 'resource://Wwwision.HtmxTest/Public/Styles/module.css'
+              javaScripts:
+                - 'resource://Wwwision.Neos.ModuleComponents/Public/Scripts/module.js'
+                - 'resource://Wwwision.HtmxTest/Public/Scripts/htmx.min.js'
+    fusion:
+      autoInclude:
+        'Wwwision.HtmxTest': true

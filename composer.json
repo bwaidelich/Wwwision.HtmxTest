@@ -1,0 +1,39 @@
+{
+    "description": "Simple package to test HTMX integration for Neos backend modules",
+    "type": "neos-package",
+    "name": "wwwision/htmxtest",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bwaidelich",
+            "email": "b.waidelich@wwwision.de"
+        }
+    ],
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/bwaidelich"
+        },
+        {
+            "type": "paypal",
+            "url": "https://www.paypal.me/bwaidelich"
+        }
+    ],
+    "require": {
+        "neos/neos": "^9",
+        "wwwision/neos-modulecomponents": "^1.2.1"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wwwision\\HtmxTest\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Wwwision.HtmxTest"
+        }
+    }
+}

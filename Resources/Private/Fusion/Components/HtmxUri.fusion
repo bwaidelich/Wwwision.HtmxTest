@@ -1,0 +1,18 @@
+prototype(Wwwision.HtmxTest:HtmxUri) < prototype(Neos.Fusion:Component) {
+  package = null
+  controller = null
+  action = 'index'
+  arguments = Neos.Fusion:DataStructure
+
+  renderer = Neos.Fusion:ActionUri {
+    #request = ${request.mainRequest}
+    package = ${props.package || request.controllerPackageKey}
+    controller = ${props.controller || request.controllerName}
+    action = ${props.action}
+    format = 'htmx'
+    arguments = ${props.arguments}
+
+    # Hack for the missing query param feature of the ActionUri prototype
+      #@process.addPageQueryParam = ${value + '?page=' + (props.page + 1)}
+  }
+}

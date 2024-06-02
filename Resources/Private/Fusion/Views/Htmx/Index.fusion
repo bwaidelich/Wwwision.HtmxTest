@@ -1,0 +1,71 @@
+# Default entry point for the rendering of the index action:
+Wwwision.HtmxTest.HtmxController.index = NeosBE:Module {
+  content = afx`
+    <NeosBE:Table>
+      <NeosBE:Table.Head>
+        <NeosBE:Table.Row>
+          <NeosBE:Table.HeaderCell>Node</NeosBE:Table.HeaderCell>
+          <NeosBE:Table.HeaderCell>Title</NeosBE:Table.HeaderCell>
+          <NeosBE:Table.HeaderCell content="" />
+        </NeosBE:Table.Row>
+      </NeosBE:Table.Head>
+      <NeosBE:Table.Body>
+        <Wwwision.HtmxTest:NodeRows nodes={nodes} page={page} />
+      </NeosBE:Table.Body>
+    </NeosBE:Table>
+    <div class="htmx-indicator"></div>
+  `
+}
+
+# HTMX entry point for the rendering of the index action:
+Wwwision.HtmxTest.HtmxController.index.htmx = Wwwision.HtmxTest:NodeRows {
+  nodes = ${nodes}
+  page = ${page}
+}
+
+prototype(Wwwision.HtmxTest:NodeRows) < prototype(Neos.Fusion:Component) {
+  nodes = null
+  page = 1
+  @private {
+    infiniteScrollUri = Wwwision.HtmxTest:HtmxUri {
+      action = 'index'
+      arguments.page = ${props.page + 1}
+    }
+  }
+  renderer = afx`
+    <Neos.Fusion:Loop items={props.nodes} itemName="node" iterationName="iteration">
+      <NeosBE:Table.FolderRow
+        attributes.@apply.infiniteScroll={{
+            hx-get: private.infiniteScrollUri,
+            hx-trigger: 'revealed',
+            hx-swap: 'afterend',
+            hx-indicator: '.htmx-indicator'
+        }}
+        attributes.@apply.infiniteScroll.@if={iteration.isLast}
+      >
+        <NeosBE:Table.Cell>{q(node).id()}</NeosBE:Table.Cell>
+        <NeosBE:Table.Cell>{String.stripTags((q(node).property('title') || '-'))}</NeosBE:Table.Cell>
+        <NeosBE:Table.ActionCell>
+            <NeosBE:ToggleButton target={"details_node_" + q(node).id()}/>
+        </NeosBE:Table.ActionCell>
+      </NeosBE:Table.FolderRow>
+      <NeosBE:Table.CollapsedRow id={"details_node_" + q(node).id()}>
+        <NeosBE:Table.Cell
+          attributes.colspan="3"
+          attributes.@apply.loadDetails={{
+            hx-trigger: 'intersect once',
+            hx-swap: 'innerHTML',
+            hx-indicator: '.htmx-indicator'
+          }}
+        >
+          <Wwwision.HtmxTest:HtmxUri
+            @path="attributes.hx-get"
+            action="show"
+            arguments.id={q(node).id()}
+          />
+          <div class="htmx-indicator"></div>
+        </NeosBE:Table.Cell>
+      </NeosBE:Table.CollapsedRow>
+    </Neos.Fusion:Loop>
+  `
+}

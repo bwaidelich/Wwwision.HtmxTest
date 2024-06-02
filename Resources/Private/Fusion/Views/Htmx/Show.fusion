@@ -1,0 +1,43 @@
+# Default entry point for the rendering of the show action:
+Wwwision.HtmxTest.HtmxController.show = NeosBE:Module {
+  content = afx`
+    <Wwwision.HtmxTest:NodeDetails node={node} />
+  `
+}
+
+# HTMX entry point for the rendering of the show action:
+Wwwision.HtmxTest.HtmxController.show.htmx = Wwwision.HtmxTest:NodeDetails {
+  node = ${node}
+}
+
+prototype(Wwwision.HtmxTest:NodeDetails) < prototype(Neos.Fusion:Component) {
+  node = null
+  renderer = afx`
+    <dl>
+        <dt>Content Repository:</dt>
+        <dd>{props.node.contentRepositoryId.value}</dd>
+        <dt>Workspace:</dt>
+        <dd>{props.node.workspaceName.value}</dd>
+        <dt>Dimension Space Point:</dt>
+        <dd>{Json.stringify(props.node.dimensionSpacePoint)}</dd>
+        <dt>Aggregate Id:</dt>
+        <dd>{q(props.node).id()}</dd>
+        <dt>Origin DSB:</dt>
+        <dd>{Json.stringify(props.node.originDimensionSpacePoint)}</dd>
+        <dt>Classification:</dt>
+        <dd>{props.node.classification.value}</dd>
+        <dt>Type:</dt>
+        <dd>{props.node.nodeTypeName.value}</dd>
+        <dt>Name:</dt>
+        <dd>{props.node.name.value}</dd>
+        <dt>Tags:</dt>
+        <dd>{Json.stringify(props.node.tags || [])}</dd>
+        <dt>Visibility Constraints:</dt>
+        <dd>{Json.stringify(props.node.visibilityConstraints)}</dd>
+        <dt>Created:</dt>
+        <dd>{Date.format(props.node.timestamps.created, 'Y-m-d H:i:s')}</dd>
+        <dt>Last modified:</dt>
+        <dd>{Date.format(props.node.timestamps.lastModified, 'Y-m-d H:i:s')}</dd>
+    </dl>
+  `
+}
