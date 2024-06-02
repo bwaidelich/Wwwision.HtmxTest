@@ -40,8 +40,6 @@ final class HtmxController extends AbstractModuleController
     {
         parent::initializeView($view);
         // If we're in a HTMX-request...
-        // note: we don't use the "HX-Request" http header to detect this case, so that we can test this case more easily
-        //if ($this->request->hasArgument('htmx')) {
         if ($this->request->getHttpRequest()->hasHeader('HX-Request')) {
             // We append an "/htmx" segment to the fusion path, changing it from "<PackageKey>/<ControllerName>/<ActionName>" to "<PackageKey>/<ControllerName>/<ActionName>/htmx"
             $htmxFusionPath = str_replace(['\\Controller\\', '\\'], ['\\', '/'], $this->request->getControllerObjectName());
